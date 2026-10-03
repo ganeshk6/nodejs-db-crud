@@ -1,6 +1,7 @@
 const express = require("express");
-const db = require("./utils/db_connection");
+const db = require('./utils/db_connection');
 const userRoutes = require("./routes/userRoutes");
+const studentModel = require('./models/students');
 const app = express();
 const PORT = 3000;
 
@@ -10,6 +11,14 @@ app.get("/", (req, res) => {
 })
 app.use("/students", userRoutes);
 
-app.listen(PORT, ()=>{
-    console.log(`Server is running on port ${PORT}`);
+db.sync({ force: false })
+.then(() => {
+    console.log("Database synchronized");
+
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
 })
+.catch((err) => {
+    console.error(err);
+});
