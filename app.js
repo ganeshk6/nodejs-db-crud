@@ -8,7 +8,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
     res.send("Welcome to the Node.js MySQL CRUD API");
 })
-app.use("/api/users", userRoutes);
+app.use("/students", userRoutes);
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`);

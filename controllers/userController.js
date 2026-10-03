@@ -18,9 +18,9 @@ const getAllUsers = (req, res) =>{
 
 const addNewuser = (req, res) => {
     try{
-        const { name, email } = req.body;
-        const query = "INSERT INTO users (name, email) VALUES (?, ?)";
-        db.execute(query, [name, email], (err, results)=>{
+        const { name, email, age } = req.body;
+        const query = "INSERT INTO users (name, email, age) VALUES (?, ?, ?)";
+        db.execute(query, [name, email, age], (err, results)=>{
             if(err){
                 sendErrorResponse(res, err, "Failed to add new user", 500);
                 return;
@@ -83,9 +83,35 @@ const deleteUser = (req, res) => {
     }
 }
 
+const getUserById = (req, res) => {
+    try{
+        const { id } = req.params;
+        const query = "SELECT * FROM users WHERE id = ?";
+        db.execute(query, [id], (err, results)=>{
+            if(err){
+                sendErrorResponse(res, err, "Failed to fetch user", 500);
+                return;
+            }
+            if (results.length === 0) {
+                sendErrorResponse(
+                    res,
+                    null,
+                    "User not found",
+                    404
+                );
+                return;
+            }
+            sendSuccessResponse(res, results[0], "User fetched successfully", 200);
+        })
+    }catch(err){
+        sendErrorResponse(res, err, "Failed to fetch user", 500);
+    }
+}
+
 module.exports = {
     getAllUsers,
     addNewuser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserById
 }
