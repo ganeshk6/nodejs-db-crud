@@ -2,6 +2,7 @@ const express = require("express");
 const db = require('./utils/db_connection');
 const userRoutes = require("./routes/userRoutes");
 const departmentRoutes = require('./routes/departmentRoutes');
+const coursesRoutes = require('./routes/coursesRoutes');
 require('./models')
 const app = express();
 const PORT = 4000;
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
 })
 app.use("/departments", departmentRoutes);
 app.use("/students", userRoutes);
+app.use("/courses", coursesRoutes);
 
 db.sync({ force: false })
 .then(() => {
