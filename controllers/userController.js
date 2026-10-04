@@ -13,11 +13,12 @@ const getAllUsers = async(req, res) =>{
 
 const addNewuser = async(req, res) => {
     try{
-        const { name, email, age } = req.body;
+        const { name, email, age, departmentId } = req.body;
         const user = await studentModel.create({
             name:name,
             email:email,
-            age:age
+            age:age,
+            departmentId: departmentId
         })
         
         sendSuccessResponse(res, user, "New user added successfully", 201);

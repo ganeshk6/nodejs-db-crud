@@ -21,6 +21,15 @@ const Students = sequelize.define(
         age:{
             type:DataTypes.STRING,
             allowNull:true
+        },
+        departmentId:{
+            type:DataTypes.INTEGER,
+            allowNull:true,
+
+            references:{
+                model: 'departments',
+                key: 'id'
+            }
         }
     }
 )
